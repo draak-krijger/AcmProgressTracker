@@ -46,7 +46,7 @@ public abstract class Input
     
     HBox hb = new HBox(30);
     
-    String us , cp , str = "*Please Input Valid Username" ;
+    String us , cp , str = "*Please wait while parsing data ...." ;
     URL us_u , cp_u ;
     
     public void showAll()
