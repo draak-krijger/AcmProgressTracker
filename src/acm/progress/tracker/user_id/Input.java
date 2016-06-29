@@ -71,7 +71,10 @@ public abstract class Input
         window.setMaxWidth(400);
         window.setMinHeight(250);
         window.setMinWidth(400);
-       /* 
+        
+        window.initModality(Modality.APPLICATION_MODAL);
+        
+       /*
         Label prog = new Label("Please wait while parshing data ..");
         ProgressIndicator pg = new ProgressIndicator();
         pg.setPrefSize(0,200);
@@ -80,16 +83,16 @@ public abstract class Input
         VBox pvb = new VBox(20);
         pvb.getChildren().addAll(prog,pg);
         pvb.setAlignment(Pos.CENTER);
-        Scene scn2 = new Scene(pvb);
+        Scene scn2 = new Scene(pvb,390,210);
         */
         submit.setOnAction(e -> {
             //window.setScene(scn2);
+            //window.close();
             check();
             //System.out.println("ok pass");
             //window.setScene(scn);
+            //window.show();
         });
-        
-        window.initModality(Modality.APPLICATION_MODAL);
         
         window.setScene(scn);
         window.show();
