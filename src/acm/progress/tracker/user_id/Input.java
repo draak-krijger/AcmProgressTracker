@@ -6,11 +6,14 @@
 package acm.progress.tracker.user_id;
 
 import java.net.URL;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
@@ -68,9 +71,22 @@ public abstract class Input
         window.setMaxWidth(400);
         window.setMinHeight(250);
         window.setMinWidth(400);
+       /* 
+        Label prog = new Label("Please wait while parshing data ..");
+        ProgressIndicator pg = new ProgressIndicator();
+        pg.setPrefSize(0,200);
+        pg.setProgress(-1.0);
         
-        submit.setOnAction(e -> { 
+        VBox pvb = new VBox(20);
+        pvb.getChildren().addAll(prog,pg);
+        pvb.setAlignment(Pos.CENTER);
+        Scene scn2 = new Scene(pvb);
+        */
+        submit.setOnAction(e -> {
+            //window.setScene(scn2);
             check();
+            //System.out.println("ok pass");
+            //window.setScene(scn);
         });
         
         window.initModality(Modality.APPLICATION_MODAL);
