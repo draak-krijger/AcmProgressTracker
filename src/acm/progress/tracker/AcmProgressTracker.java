@@ -18,8 +18,8 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 /**
- *
- * @author RONIN-47
+ * This class is first class where our application start.
+ * It extends Application class 
  */
 public class AcmProgressTracker extends Application {
     
@@ -34,6 +34,11 @@ public class AcmProgressTracker extends Application {
         
         Button oj[] = new Button[6] ;
         
+        /**
+         * Here we create five button for our five different online judge 
+         * One user should use one of them .
+         */
+        
         oj[0] = new Button("Uva");
         oj[1] = new Button("HDU");
         oj[2] = new Button("Codeforce");
@@ -43,12 +48,20 @@ public class AcmProgressTracker extends Application {
         HBox hb = new HBox(20);
         hb.setAlignment(Pos.CENTER);
         
+        /**
+         * Set hight and width of oj(online judge) Button
+         */
+        
         for(int i=0 ; i<5 ; i++)
         {
             oj[i].setMinWidth(50);
             oj[i].setMinHeight(50);
             hb.getChildren().add(oj[i]);
         }
+        
+        /**
+         * Here we set position of button in scene and set label
+         */
         
         VBox vb = new VBox(20);
         
@@ -61,11 +74,25 @@ public class AcmProgressTracker extends Application {
         stk.getChildren().add(vb);
         stk.setAlignment(Pos.CENTER);
         
+        /**
+         * In this section we set oj button action
+         */
+        
+        /**
+         *  this is for uva online judge button 
+         *  when we click here it create a Uva class and show user name input window
+         */
+        
         oj[0].setOnAction(e -> {
             Uva uv = new Uva();
             
             uv.showAll();
         });
+        
+        /**
+         *  this is for HDU online judge button 
+         *  when we click here it create a Hdu class and show user name input window
+         */
         
         oj[1].setOnAction(e -> {
             Hdu hd = new Hdu();
@@ -73,11 +100,21 @@ public class AcmProgressTracker extends Application {
             hd.showAll();
         });
         
+        /**
+         *  this is for CODEFORCES online judge button 
+         *  when we click here it create a Cf class and show user name input window
+         */
+        
         oj[2].setOnAction(e -> {
             Cf cdf = new Cf();
             
             cdf.showAll();
         });
+        
+        /**
+         *  this is for POJ online judge button 
+         *  when we click here it create a Poj class and show user name input window
+         */
         
         oj[3].setOnAction(e -> {
             Poj pj = new Poj();
@@ -85,11 +122,20 @@ public class AcmProgressTracker extends Application {
             pj.showAll();
         });
         
+        /**
+         *  this is for Timus online judge button 
+         *  when we click here it create a Timus class and show user name input window
+         */
+        
         oj[4].setOnAction(e -> { 
             Timus tm = new Timus();
             
             tm.showAll();
         });
+        
+        /**
+         * here we set scene in our stage
+         */    
         
         Scene scn = new Scene(stk,500,300);
         window.setScene(scn);
