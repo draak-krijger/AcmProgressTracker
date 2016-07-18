@@ -37,6 +37,12 @@ public class Calculation
             while(j<user1.size() && (int)user2.get(i) > (int)user1.get(j))
                 j++;
             
+            if(j>=user1.size())
+            {
+                difference_with_second.add(user2.get(i));
+                continue ;
+            }
+            
             if(j<user1.size() && (int)user2.get(i) != (int)user1.get(j))
                 difference_with_second.add(user2.get(i));
         }

@@ -6,14 +6,12 @@
 package acm.progress.tracker.user_id;
 
 import java.net.URL;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.ArrayList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
@@ -22,7 +20,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javax.xml.stream.XMLInputFactory;
 
 /**
  * This is an abstract class . 
@@ -35,27 +32,29 @@ public abstract class Input
      * here we create a new stage object. 
      */
     
-    Stage window = new Stage();
     
-    Label name = new Label("User Name    :");
-    Label comp = new Label("Compare With :");
-    
-    VBox lb = new VBox(25);
-    
-    TextField user_id = new TextField();
-    TextField compared_id = new TextField();
-    Button submit = new Button("Submit");
-    Text txt  = new Text() ;
-    
-    VBox id_valu = new VBox(20);
-    
-    HBox hb = new HBox(30);
     
     String us , cp , str = "*Please wait while parsing data ...." ;
     URL us_u , cp_u ;
     
-    public void showAll()
+    public void showAll(int judge)
     {
+        Stage window = new Stage();
+    
+        Label name = new Label("User Name    :");
+        Label comp = new Label("Compare With :");
+
+        VBox lb = new VBox(25);
+
+        TextField user_id = new TextField();
+        TextField compared_id = new TextField();
+        Button submit = new Button("Submit");
+        Text txt  = new Text() ;
+
+        VBox id_valu = new VBox(20);
+
+        HBox hb = new HBox(30);
+    
         lb.getChildren().addAll(name,comp);
         id_valu.getChildren().addAll(user_id,compared_id,submit,txt);
         
@@ -93,7 +92,11 @@ public abstract class Input
         submit.setOnAction(e -> {
             //window.setScene(scn2);
             //window.close();
-            check();
+            us = user_id.getText();
+            cp = compared_id.getText();
+            txt.setText("");
+        
+            check(judge);
             //System.out.println("ok pass");
             //window.setScene(scn);
             //window.show();
@@ -103,7 +106,7 @@ public abstract class Input
         window.show();
     }
     
-    static boolean is_empty(String str)
+    boolean is_empty(String str)
     {
         if(str.length() == 0)
             return true ;
@@ -112,13 +115,11 @@ public abstract class Input
     }
     
     abstract boolean is_valid(String st);
-    abstract void next_window();
+    abstract void next_window(ArrayList v1,ArrayList v2);
     
-    void check()
+    void check(int judge)
     {
-        us = user_id.getText();
-        cp = compared_id.getText();
-        txt.setText("");
+        
         
         if(is_empty(us) || is_empty(cp))
         {
@@ -128,8 +129,24 @@ public abstract class Input
         
         else
         {
-            if(is_valid(us) & is_valid(cp))
-                next_window();
+            CollectingDatafromServer cds = new CollectingDatafromServer(judge, us, cp);
+            AddProgressBar pb = new AddProgressBar();
+            cds.start();
+            pb.show();
+            
+            try
+            {
+                cds.join();
+                //pb.window.close();
+            }
+            
+            catch(Exception ex)
+            {
+                cds.is_valid = 0 ;
+            }
+            
+            if(cds.is_valid == 1)
+                next_window(cds.v1,cds.v2);
             
             else
             {

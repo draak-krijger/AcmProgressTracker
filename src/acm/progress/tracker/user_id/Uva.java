@@ -31,7 +31,8 @@ public class Uva extends Input
         
         catch(Exception ex)
         {
-            window.close();
+            Error er = new Error();
+                er.show();
         }
     }
     
@@ -62,7 +63,7 @@ public class Uva extends Input
     }
 
     @Override
-    void next_window() 
+    void next_window(ArrayList v1,ArrayList v2) 
     {//System.out.println("ok");
         ShowDifference diff = new ShowDifference(v1, v2);
         diff.find_differences();

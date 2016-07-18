@@ -86,7 +86,7 @@ public class AcmProgressTracker extends Application {
         oj[0].setOnAction(e -> {
             Uva uv = new Uva();
             
-            uv.showAll();
+            uv.showAll(0);
         });
         
         /**
@@ -97,7 +97,7 @@ public class AcmProgressTracker extends Application {
         oj[1].setOnAction(e -> {
             Hdu hd = new Hdu();
             
-            hd.showAll();
+            hd.showAll(1);
         });
         
         /**
@@ -108,7 +108,7 @@ public class AcmProgressTracker extends Application {
         oj[2].setOnAction(e -> {
             Cf cdf = new Cf();
             
-            cdf.showAll();
+            cdf.showAll(2);
         });
         
         /**
@@ -119,7 +119,7 @@ public class AcmProgressTracker extends Application {
         oj[3].setOnAction(e -> {
             Poj pj = new Poj();
             
-            pj.showAll();
+            pj.showAll(3);
         });
         
         /**
@@ -130,7 +130,7 @@ public class AcmProgressTracker extends Application {
         oj[4].setOnAction(e -> { 
             Timus tm = new Timus();
             
-            tm.showAll();
+            tm.showAll(4);
         });
         
         /**

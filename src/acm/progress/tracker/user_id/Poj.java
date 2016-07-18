@@ -111,7 +111,7 @@ public class Poj extends Input
         return true ;
     }
     @Override
-    void next_window() 
+    void next_window(ArrayList v1,ArrayList v2) 
     {
         ShowDifference diff = new ShowDifference(v1, v2);
         diff.find_differences();

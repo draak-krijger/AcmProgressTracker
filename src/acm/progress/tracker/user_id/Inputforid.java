@@ -6,6 +6,7 @@
 package acm.progress.tracker.user_id;
 
 import java.net.URL;
+import java.util.ArrayList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -26,28 +27,28 @@ import javax.xml.stream.XMLInputFactory;
  * @author RONIN-47
  */
 public abstract class Inputforid 
-{
-    Stage window = new Stage();
-    
-    Label name = new Label("User Id  :");
-    Label comp = new Label("Compare With :");
-    
-    VBox lb = new VBox(25);
-    
-    TextField user_id = new TextField();
-    TextField compared_id = new TextField();
-    Button submit = new Button("Submit");
-    Text txt  = new Text() ;
-    
-    VBox id_valu = new VBox(20);
-    
-    HBox hb = new HBox(30);
-    
+{   
     String us , cp , str = "*Please Input Valid Username" ;
     URL us_u , cp_u ;
     
-    public void showAll()
+    public void showAll(int judge)
     {
+        Stage window = new Stage();
+    
+        Label name = new Label("User Id  :");
+        Label comp = new Label("Compare With :");
+
+        VBox lb = new VBox(25);
+
+        TextField user_id = new TextField();
+        TextField compared_id = new TextField();
+        Button submit = new Button("Submit");
+        Text txt  = new Text() ;
+
+        VBox id_valu = new VBox(20);
+
+        HBox hb = new HBox(30);
+    
         lb.getChildren().addAll(name,comp);
         id_valu.getChildren().addAll(user_id,compared_id,submit,txt);
         
@@ -70,7 +71,10 @@ public abstract class Inputforid
         window.setMinWidth(400);
         
         submit.setOnAction(e -> { 
-            check();
+            us = user_id.getText();
+            cp = compared_id.getText();
+            txt.setText("");
+            check(judge);
         });
         
         window.initModality(Modality.APPLICATION_MODAL);
@@ -88,14 +92,10 @@ public abstract class Inputforid
     }
     
     abstract boolean is_valid(String st);
-    abstract void next_window();
+    abstract void next_window(ArrayList v1,ArrayList v2);
     
-    void check()
+    void check(int judge)
     {
-        us = user_id.getText();
-        cp = compared_id.getText();
-        txt.setText("");
-        
         if(is_empty(us) || is_empty(cp))
         {
             Error er = new Error();
@@ -104,8 +104,21 @@ public abstract class Inputforid
         
         else
         {
-            if(is_valid(us) & is_valid(cp))
-                next_window();
+            CollectingDatafromServer cds = new CollectingDatafromServer(judge, us, cp);
+            cds.start();
+            
+            try
+            {
+                cds.join();
+            }
+            
+            catch(Exception ex)
+            {
+                cds.is_valid = 0 ;
+            }
+            
+            if(cds.is_valid == 1)
+                next_window(cds.v1,cds.v2);
             
             else
             {
