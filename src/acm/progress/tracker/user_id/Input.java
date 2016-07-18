@@ -25,11 +25,16 @@ import javafx.stage.Stage;
 import javax.xml.stream.XMLInputFactory;
 
 /**
- *
- * @author RONIN-47
+ * This is an abstract class . 
+ * In this class we create a new window which help us to take input from user user name .
+ * 
  */
 public abstract class Input 
 {
+    /**
+     * here we create a new stage object. 
+     */
+    
     Stage window = new Stage();
     
     Label name = new Label("User Name    :");

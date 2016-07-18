@@ -160,8 +160,7 @@ public class Cf extends Input
 
     @Override
     void next_window() 
-    {System.out.println(v1.size());
-    System.out.println(v2.size());
+    {
         ShowDifference diff = new ShowDifference(v1, v2);
         diff.find_differences();
         diff.show(true);
