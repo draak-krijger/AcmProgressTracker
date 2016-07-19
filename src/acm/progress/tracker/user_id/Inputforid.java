@@ -7,6 +7,7 @@ package acm.progress.tracker.user_id;
 
 import java.net.URL;
 import java.util.ArrayList;
+import javafx.concurrent.Task;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -30,6 +31,7 @@ public abstract class Inputforid
 {   
     String us , cp , str = "*Please Input Valid Username" ;
     URL us_u , cp_u ;
+    CollectingDatafromServer cds ;
     
     public void showAll(int judge)
     {
@@ -104,7 +106,40 @@ public abstract class Inputforid
         
         else
         {
-            CollectingDatafromServer cds = new CollectingDatafromServer(judge, us, cp);
+            cds = new CollectingDatafromServer(judge, us, cp);
+            AddProgressBar pb = new AddProgressBar();
+            
+            pb.window.setOnCloseRequest(e -> {
+                pb.window.close();
+                return ;
+            });
+            
+            tsk.setOnSucceeded(event -> {
+                
+                pb.window.close();
+                
+                if(cds.is_valid == 1)
+                    next_window(cds.v1,cds.v2);
+            
+                else
+                {
+                    Error er = new Error();
+                    er.show();
+                }
+            });
+            
+            pb.show();
+            
+            Thread th = new Thread(tsk);
+            th.start();
+        }
+    }
+    
+    Task tsk = new Task<Void>()
+    {   
+        @Override
+        protected Void call() 
+        {
             cds.start();
             
             try
@@ -114,17 +149,10 @@ public abstract class Inputforid
             
             catch(Exception ex)
             {
-                cds.is_valid = 0 ;
+                // 
             }
             
-            if(cds.is_valid == 1)
-                next_window(cds.v1,cds.v2);
-            
-            else
-            {
-                Error er = new Error();
-                er.show();
-            }
-        }
-    }
+            return null ;
+        } 
+    };
 }

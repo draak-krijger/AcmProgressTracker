@@ -7,12 +7,14 @@ package acm.progress.tracker.user_id;
 
 import java.net.URL;
 import java.util.ArrayList;
+import javafx.concurrent.Task;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -36,10 +38,13 @@ public abstract class Input
     
     String us , cp , str = "*Please wait while parsing data ...." ;
     URL us_u , cp_u ;
+    CollectingDatafromServer cds ;
     
     public void showAll(int judge)
     {
         Stage window = new Stage();
+        Image ico = new Image("images/acm.png");
+        window.getIcons().add(ico);
     
         Label name = new Label("User Name    :");
         Label comp = new Label("Compare With :");
@@ -129,30 +134,53 @@ public abstract class Input
         
         else
         {
-            CollectingDatafromServer cds = new CollectingDatafromServer(judge, us, cp);
+            cds = new CollectingDatafromServer(judge, us, cp);
             AddProgressBar pb = new AddProgressBar();
-            cds.start();
+            
+            pb.window.setOnCloseRequest(e -> {
+                pb.window.close();
+                return ;
+            });
+            
+            tsk.setOnSucceeded(event -> {
+                
+                pb.window.close();
+                
+                if(cds.is_valid == 1)
+                    next_window(cds.v1,cds.v2);
+            
+                else
+                {
+                    Error er = new Error();
+                    er.show();
+                }
+            });
+            
             pb.show();
+            
+            Thread th = new Thread(tsk);
+            th.start();
+        }
+    }
+    
+    Task tsk = new Task<Void>()
+    {   
+        @Override
+        protected Void call() 
+        {
+            cds.start();
             
             try
             {
                 cds.join();
-                //pb.window.close();
             }
             
             catch(Exception ex)
             {
-                cds.is_valid = 0 ;
+                //  
             }
             
-            if(cds.is_valid == 1)
-                next_window(cds.v1,cds.v2);
-            
-            else
-            {
-                Error er = new Error();
-                er.show();
-            }
-        }
-    }
+            return null ;
+        } 
+    };
 }

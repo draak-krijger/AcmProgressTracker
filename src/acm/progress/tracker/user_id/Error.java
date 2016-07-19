@@ -9,6 +9,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Modality;
@@ -23,6 +24,9 @@ public class Error
     public void show()
     {
         Stage window = new Stage();
+        
+        Image ico = new Image("images/acm.png");
+        window.getIcons().add(ico);
         
         window.setMinWidth(310);
         window.setMinHeight(110);

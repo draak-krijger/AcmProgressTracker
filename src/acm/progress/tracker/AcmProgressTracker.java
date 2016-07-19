@@ -12,6 +12,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -29,8 +30,10 @@ public class AcmProgressTracker extends Application {
     public void start(Stage primaryStage) {
         window = primaryStage ;
         window.setTitle("Acm Progress Tracker");
-        window.setMinWidth(500);
-        window.setMinHeight(300);
+        window.setMinWidth(800);
+        window.setMinHeight(500);
+        Image ico = new Image("images/acm.png");
+        window.getIcons().add(ico);
         
         Button oj[] = new Button[6] ;
         
@@ -136,8 +139,10 @@ public class AcmProgressTracker extends Application {
         /**
          * here we set scene in our stage
          */    
-        
+        stk.setStyle("-fx-background: black;");
         Scene scn = new Scene(stk,500,300);
+        scn.getStylesheets().add("stylesheet/mainwindow.css");
+        
         window.setScene(scn);
         window.show();
     }

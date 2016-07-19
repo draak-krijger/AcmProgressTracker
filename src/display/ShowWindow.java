@@ -6,6 +6,7 @@
 package display;
 
 import java.util.ArrayList;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 /**
@@ -28,6 +29,9 @@ public class ShowWindow
     {
         window = new Stage();
         
+        Image ico = new Image("images/acm.png");
+        window.getIcons().add(ico);
+        
         window.setTitle("Differences");
         window.setMinHeight(500);
         window.setMaxHeight(500);
@@ -45,38 +49,47 @@ public class ShowWindow
             scn3.make_scene();
 
             scn1.btn1.setOnAction(e -> {
+                scn1.btn1.setDefaultButton(true);
                 window.setScene(scn1.scn);
             });
 
             scn2.btn1.setOnAction(e -> {
+                scn1.btn1.setDefaultButton(true);
                 window.setScene(scn1.scn);
             });
 
             scn3.btn1.setOnAction(e -> {
+                scn1.btn1.setDefaultButton(true);
                 window.setScene(scn1.scn);
             });
 
             scn1.btn2.setOnAction(e -> {
+                scn2.btn2.setDefaultButton(true);
                 window.setScene(scn2.scn);
             });
 
             scn2.btn2.setOnAction(e -> {
+                scn2.btn2.setDefaultButton(true);
                 window.setScene(scn2.scn);
             });
 
             scn3.btn2.setOnAction(e -> {
+                scn2.btn2.setDefaultButton(true);
                 window.setScene(scn2.scn);
             });
 
             scn1.btn3.setOnAction(e -> {
+                scn3.btn3.setDefaultButton(true);
                 window.setScene(scn3.scn);
             });
 
             scn2.btn3.setOnAction(e -> {
+                scn3.btn3.setDefaultButton(true);
                 window.setScene(scn3.scn);
             });
 
             scn3.btn3.setOnAction(e -> {
+                scn3.btn3.setDefaultButton(true);
                 window.setScene(scn3.scn);
             });
 
@@ -94,38 +107,47 @@ public class ShowWindow
             scn3.make_scene();
 
             scn1.btn1.setOnAction(e -> {
+                scn1.btn1.setDefaultButton(true);
                 window.setScene(scn1.scn);
             });
 
             scn2.btn1.setOnAction(e -> {
+                scn1.btn1.setDefaultButton(true);
                 window.setScene(scn1.scn);
             });
 
             scn3.btn1.setOnAction(e -> {
+                scn1.btn1.setDefaultButton(true);
                 window.setScene(scn1.scn);
             });
 
             scn1.btn2.setOnAction(e -> {
+                scn2.btn2.setDefaultButton(true);
                 window.setScene(scn2.scn);
             });
 
             scn2.btn2.setOnAction(e -> {
+                scn2.btn2.setDefaultButton(true);
                 window.setScene(scn2.scn);
             });
 
             scn3.btn2.setOnAction(e -> {
+                scn2.btn2.setDefaultButton(true);
                 window.setScene(scn2.scn);
             });
 
             scn1.btn3.setOnAction(e -> {
+                scn3.btn3.setDefaultButton(true);
                 window.setScene(scn3.scn);
             });
 
             scn2.btn3.setOnAction(e -> {
+                scn3.btn3.setDefaultButton(true);
                 window.setScene(scn3.scn);
             });
 
             scn3.btn3.setOnAction(e -> {
+                scn3.btn3.setDefaultButton(true);
                 window.setScene(scn3.scn);
             });
 

@@ -11,6 +11,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.ProgressIndicator;
+import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -25,6 +26,8 @@ public class AddProgressBar
     
     void show()
     {
+        Image ico = new Image("images/acm.png");
+        window.getIcons().add(ico);
         ProgressIndicator pb = new ProgressIndicator();
         pb.setPrefSize(200, 50);
         pb.setProgress(-1.0);
