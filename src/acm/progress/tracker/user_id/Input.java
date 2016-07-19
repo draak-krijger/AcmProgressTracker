@@ -39,6 +39,7 @@ public abstract class Input
     String us , cp , str = "*Please wait while parsing data ...." ;
     URL us_u , cp_u ;
     CollectingDatafromServer cds ;
+    boolean isk ;
     
     public void showAll(int judge)
     {
@@ -72,7 +73,7 @@ public abstract class Input
         StackPane st = new StackPane();
         st.getChildren().addAll(hb);
         st.setAlignment(Pos.CENTER);
-        
+        st.setStyle("-fx-background: black;");
         Scene scn = new Scene(st);
         
         window.setTitle("User Name Input");
@@ -107,6 +108,7 @@ public abstract class Input
             //window.show();
         });
         
+        scn.getStylesheets().add("stylesheet/mainwindow.css");
         window.setScene(scn);
         window.show();
     }
@@ -134,17 +136,22 @@ public abstract class Input
         
         else
         {
+            isk = false ;
             cds = new CollectingDatafromServer(judge, us, cp);
             AddProgressBar pb = new AddProgressBar();
             
             pb.window.setOnCloseRequest(e -> {
-                pb.window.close();
+                cds.stop();
+                isk = true ;
                 return ;
             });
             
             tsk.setOnSucceeded(event -> {
                 
                 pb.window.close();
+                
+                if(isk)
+                    return ;
                 
                 if(cds.is_valid == 1)
                     next_window(cds.v1,cds.v2);

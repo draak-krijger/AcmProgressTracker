@@ -28,10 +28,10 @@ public class Error
         Image ico = new Image("images/acm.png");
         window.getIcons().add(ico);
         
-        window.setMinWidth(310);
-        window.setMinHeight(110);
-        window.setMaxHeight(110);
-        window.setMaxWidth(310);
+        window.setMinWidth(400);
+        window.setMinHeight(130);
+        window.setMaxHeight(130);
+        window.setMaxWidth(400);
         
         Label lb = new Label("Problem with user name or Internet Connection.");
         Button bt = new Button("OK");
@@ -46,8 +46,9 @@ public class Error
         });
         
         window.initModality(Modality.APPLICATION_MODAL);
-        
+        vb.setStyle("-fx-background: black;");
         Scene scn = new Scene(vb,300,100);
+        scn.getStylesheets().add("stylesheet/mainwindow.css");
         window.setScene(scn);
         window.show();
     }

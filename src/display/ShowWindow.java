@@ -33,8 +33,8 @@ public class ShowWindow
         window.getIcons().add(ico);
         
         window.setTitle("Differences");
-        window.setMinHeight(500);
-        window.setMaxHeight(500);
+        window.setMinHeight(528);
+        window.setMaxHeight(528);
         window.setMinWidth(800);
         window.setMaxWidth(800);
         
@@ -47,6 +47,7 @@ public class ShowWindow
             scn1.make_scene();
             scn2.make_scene();
             scn3.make_scene();
+            
 
             scn1.btn1.setOnAction(e -> {
                 scn1.btn1.setDefaultButton(true);

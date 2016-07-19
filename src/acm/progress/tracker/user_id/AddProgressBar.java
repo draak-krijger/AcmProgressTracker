@@ -27,6 +27,7 @@ public class AddProgressBar
     void show()
     {
         Image ico = new Image("images/acm.png");
+        window.setResizable(false);
         window.getIcons().add(ico);
         ProgressIndicator pb = new ProgressIndicator();
         pb.setPrefSize(200, 50);
@@ -38,8 +39,9 @@ public class AddProgressBar
         vb.setAlignment(Pos.CENTER);
         
         window.initModality(Modality.APPLICATION_MODAL);
-        
+        vb.setStyle("-fx-background: black;");
         Scene scn = new Scene(vb,250,70);
+        scn.getStylesheets().add("stylesheet/mainwindow.css");
         window.setScene(scn);
         window.show();
     }

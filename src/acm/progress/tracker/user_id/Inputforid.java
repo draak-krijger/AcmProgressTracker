@@ -8,6 +8,7 @@ package acm.progress.tracker.user_id;
 import java.net.URL;
 import java.util.ArrayList;
 import javafx.concurrent.Task;
+import javafx.event.Event;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -32,6 +33,7 @@ public abstract class Inputforid
     String us , cp , str = "*Please Input Valid Username" ;
     URL us_u , cp_u ;
     CollectingDatafromServer cds ;
+    boolean isk ;
     
     public void showAll(int judge)
     {
@@ -63,7 +65,7 @@ public abstract class Inputforid
         StackPane st = new StackPane();
         st.getChildren().addAll(hb);
         st.setAlignment(Pos.CENTER);
-        
+        st.setStyle("-fx-background: black;");
         Scene scn = new Scene(st);
         
         window.setTitle("User Name Input");
@@ -80,7 +82,7 @@ public abstract class Inputforid
         });
         
         window.initModality(Modality.APPLICATION_MODAL);
-        
+        scn.getStylesheets().add("stylesheet/mainwindow.css");
         window.setScene(scn);
         window.show();
     }
@@ -108,15 +110,20 @@ public abstract class Inputforid
         {
             cds = new CollectingDatafromServer(judge, us, cp);
             AddProgressBar pb = new AddProgressBar();
+            isk = false ;
             
             pb.window.setOnCloseRequest(e -> {
-                pb.window.close();
+                cds.stop();
+                isk = true; 
                 return ;
             });
             
-            tsk.setOnSucceeded(event -> {
+            tsk.setOnSucceeded((Event event) -> {
                 
                 pb.window.close();
+                
+                if(isk)
+                    return ;
                 
                 if(cds.is_valid == 1)
                     next_window(cds.v1,cds.v2);

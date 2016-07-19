@@ -44,6 +44,8 @@ public class CreateScene
         vb = new VBox(20) ;
         vb.setPadding(new Insets(10, 10, 10, 10));
         vb.getChildren().addAll(userlist,hb);
+        vb.setStyle("-fx-background: black;");
         scn = new Scene(vb,790,490);
+        scn.getStylesheets().add("stylesheet/mainwindow.css");
     }
 }

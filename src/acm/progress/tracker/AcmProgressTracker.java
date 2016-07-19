@@ -16,6 +16,7 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 /**
@@ -69,6 +70,8 @@ public class AcmProgressTracker extends Application {
         VBox vb = new VBox(20);
         
         Label lbl = new Label("Please Select a Judge ");
+        Label nam = new Label("Acm Progress Tracker");
+        //nam.setFont(new Font("Cambria",100));
         
         vb.getChildren().addAll(lbl,hb);
         vb.setAlignment(Pos.CENTER);
