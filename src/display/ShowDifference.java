@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class ShowDifference 
 {
     ArrayList user = new ArrayList() , compare_with = new ArrayList() , difference ;
-    Calculation list ;
+    public Calculation list ;
     
     public ShowDifference(ArrayList user , ArrayList compre_with)
     {

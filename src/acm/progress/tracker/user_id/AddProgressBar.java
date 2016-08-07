@@ -22,7 +22,7 @@ import javafx.stage.Stage;
  */
 public class AddProgressBar 
 {
-    Stage window = new Stage() ;
+    public Stage window = new Stage() ;
     
     void show()
     {

@@ -13,10 +13,12 @@ import java.util.*;
  */
 public class CollectingDatafromServer extends Thread
 {
-    int judge = 0 , is_valid = 0 ;
+    public int judge = 0 , is_valid = 0 ;
     String us , cp ;
-    ArrayList v1 = new ArrayList() ;
-    ArrayList v2 = new ArrayList() ;
+    public ArrayList v1 = new ArrayList() ;
+    public ArrayList v2 = new ArrayList() ;
+    public ArrayList v3 = new ArrayList() ;
+    public ArrayList v4 = new ArrayList();
 
     public CollectingDatafromServer(int judge,String us,String cp) 
     {
@@ -68,6 +70,8 @@ public class CollectingDatafromServer extends Thread
                 {
                     v1 = cdf.v1 ;
                     v2 = cdf.v2 ;
+                    v3 = cdf.drf ;
+                    v4 = cdf.pname ;
                     is_valid = 1 ;
                 }
             }

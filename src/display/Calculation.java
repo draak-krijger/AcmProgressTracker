@@ -17,7 +17,7 @@ public class Calculation
 {
     ArrayList user1 = new ArrayList();
     ArrayList user2 = new ArrayList();
-    ArrayList difference_with_second = new ArrayList();
+    public ArrayList difference_with_second = new ArrayList();
 
     public Calculation(ArrayList user1,ArrayList user2) 
     {

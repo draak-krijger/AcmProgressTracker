@@ -17,16 +17,16 @@ import java.io.* ;
 public class Cf extends Input
 {
     String ur = "http://codeforces.com/api/user.status?handle=" , ur2 = "&from=1&count=100000" , pat = "\"problem\":{\"contestId\":" , pat2 = "\"verdict\":\"" ;
-    String c_p1 , c_p2 , c_p3 ;
+    String c_p1 , c_p2 , c_p3 , name , problem_name ;
     URL tm  ;
     InputStreamReader is ;
     BufferedReader bf  ;
-    boolean fok = false , tok = false , tok1 = false , tok2 = false , num_ok = false ;
+    boolean fok = false , tok = false , tok1 = false , tok2 = false , num_ok = false , bln1 = true , bln2 = false , bln3 = false ;
     
-    ArrayList v1 = new ArrayList() , v2 = new ArrayList();
+    public ArrayList v1 = new ArrayList() , v2 = new ArrayList() , pname = new ArrayList() , drf = new ArrayList() , fpname = new ArrayList();
     
     @Override
-    boolean is_valid(String str) 
+    public boolean is_valid(String str) 
     {
         tok = tok1 = tok2 = num_ok = false ;
         
@@ -67,6 +67,48 @@ public class Cf extends Input
                 
                 for(int i=0 ; i<len ; i++)
                 {
+                    if(fok)
+                    {
+                        if(bln1)
+                        {
+                            name += line.charAt(i) ;
+                            
+                            if(name.length() >= 4)
+                            {
+                                if(name.length() > 4)
+                                    name = name.substring(1);
+                                
+                                if(bln2)
+                                {    
+                                    if(bln3)
+                                    {
+                                        if(line.charAt(i) == '"' && line.charAt(i+1) == ',')
+                                        {
+                                            bln1 = false ;
+                                            bln2 = false ;
+                                            bln3 = false ;
+                                        }
+                                        
+                                        else
+                                            problem_name += line.charAt(i);
+                                    }
+                                    
+                                    else if((line.charAt(i) >= 'A' && line.charAt(i) <= 'Z') || (line.charAt(i) >= 'a' && line.charAt(i) <= 'z') )
+                                    {
+                                        problem_name += line.charAt(i) ;
+                                        bln3 = true ;
+                                    }
+                                }
+                                
+                                else if(name.equals("name"))
+                                {
+                                    bln2 = true ;
+                                    problem_name = "" ;
+                                } 
+                            }
+                        }
+                    }
+                    
                     if(tok)
                     {
                         c_p1 += line.charAt(i) ;
@@ -77,14 +119,25 @@ public class Cf extends Input
                             tok2 = false ;
                             tok1 = false ;
                             c_p3 = "" ;
+                            bln1 = true ;
                         }
                         
                         if(c_p1.equals("OK"))
                         {
                             if(fok)
                             {
+                                bln1 = true ;
+                                
                                 if(!v2.contains(num))
                                     v2.add(num);
+                                
+//                                if(num == 4550)
+//                                System.out.println(v1.contains(num));
+                                if(!v1.contains(num))
+                                {
+                                    drf.add(num);
+                                    pname.add(problem_name);
+                                }
                             }
                             
                             else
@@ -157,12 +210,78 @@ public class Cf extends Input
         fok = true ;
         return true ;
     }
+    
+    public void save_data(ArrayList v1,ArrayList v2)
+    {
+        drf = v1 ;
+        pname = v2 ;
+    }
 
     @Override
-    void next_window(ArrayList v1,ArrayList v2) 
+    public void next_window(ArrayList v1,ArrayList v2) 
     {
-        ShowDifference diff = new ShowDifference(v1, v2);
-        diff.find_differences();
-        diff.show(true);
+//        System.out.println(drf.size());
+//        ShowDifference diff = new ShowDifference(v1, v2);
+//        diff.find_differences();
+        dif = drf ;
+        
+        Collections.sort(v1);
+        Collections.sort(v2);
+        
+        int a , ch ;
+        
+        String str ;
+        
+        for(int i=0 ; i<dif.size() ; i++)
+        {
+            a = (int)dif.get(i);
+            
+            if(i>0 && (int)dif.get(i) == (int)dif.get(i-1))
+                continue ;
+            
+            fpname.add(pname.get(i));
+            //System.out.println(valu);
+            ch = a%10 ;
+            a /= 10 ;
+            str = Integer.toString(a);
+            str += " " ;
+            str += Character.toString((char) ('A'+ch));
+            //System.out.println(str);
+            fd.add(str);
+        }
+        
+        for(int i=0 ; i<v1.size() ; i++)
+        {
+            a = (int)v1.get(i);
+            
+            if(i>0 && (int)v1.get(i) == (int)v1.get(i-1))
+                continue ;
+            
+            //System.out.println(valu);
+            ch = a%10 ;
+            a /= 10 ;
+            str = Integer.toString(a);
+            str += " " ;
+            str += Character.toString((char) ('A'+ch));
+            //System.out.println(str);
+            fv1.add(str);
+        }
+        
+        for(int i=0 ; i<v2.size() ; i++)
+        {
+            a = (int)v2.get(i);
+            
+            if(i>0 && (int)v2.get(i) == (int)v2.get(i-1))
+                continue ;
+            
+            //System.out.println(valu);
+            ch = a%10 ;
+            a /= 10 ;
+            str = Integer.toString(a);
+            str += " " ;
+            str += Character.toString((char) ('A'+ch));
+            //System.out.println(str);
+            fv2.add(str);
+        }
     }
 }

@@ -15,7 +15,7 @@ import display.* ;
  *
  * @author RONIN-47
  */
-public class Timus extends Inputforid
+public class Timus extends Input
 {
     String ur = "http://acm.timus.ru/author.aspx?id=" ;
     String pat1 = "author.aspx?id=" , cal_pat_1 = null , id1 = null , id2 = "Author not found" , cal_pt = null ;
@@ -23,10 +23,10 @@ public class Timus extends Inputforid
     URL tm ;
     InputStreamReader is;
     
-    ArrayList v1 = new ArrayList() , v2 = new ArrayList();
+    public ArrayList v1 = new ArrayList() , v2 = new ArrayList();
     
     @Override
-    boolean is_valid(String str)
+    public boolean is_valid(String str)
     {
         pat1 = "CLASS=\"accepted\"" ;
         String pat2 = "num=" ;
@@ -126,11 +126,35 @@ public class Timus extends Inputforid
     
 
     @Override
-    void next_window(ArrayList v1,ArrayList v2) 
+    public void next_window(ArrayList v1,ArrayList v2) 
     {
         ShowDifference diff = new ShowDifference(v1, v2);
         diff.find_differences();
-        diff.show(false);
+        dif = diff.list.difference_with_second ;
+        
+        int a , ch ;
+        String nm ;
+        
+        for(int i=0 ; i<v1.size() ; i++)
+        {
+            a = (int)v1.get(i);
+            nm = Integer.toString(a);
+            fv1.add(nm);
+        }
+        
+        for(int i=0 ; i<v2.size() ; i++)
+        {
+            a = (int)v2.get(i);
+            nm = Integer.toString(a);
+            fv2.add(nm);
+        }
+        
+        for(int i=0 ; i<dif.size() ; i++)
+        {
+            a = (int)dif.get(i);
+            nm = Integer.toString(a);
+            fd.add(nm);
+        }
     }
     
 }

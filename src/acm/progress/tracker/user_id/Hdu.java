@@ -22,10 +22,10 @@ public class Hdu extends Input
     BufferedReader bf , id1 , id2 ;
     boolean fok = false , tok = true ;
     
-    ArrayList v1 = new ArrayList() , v2 = new ArrayList();
+    public ArrayList v1 = new ArrayList() , v2 = new ArrayList();
     
     @Override
-    boolean is_valid(String str) 
+    public boolean is_valid(String str) 
     {
         cal_pat = "" ;
         cal_pt2 = "" ;
@@ -124,11 +124,35 @@ public class Hdu extends Input
     }
 
     @Override
-    void next_window(ArrayList v1,ArrayList v2) 
+    public void next_window(ArrayList v1,ArrayList v2) 
     {
         ShowDifference diff = new ShowDifference(v1, v2);
         diff.find_differences();
-        diff.show(false);
+        dif = diff.list.difference_with_second ;
+        
+        int a , ch ;
+        String nm ;
+        
+        for(int i=0 ; i<v1.size() ; i++)
+        {
+            a = (int)v1.get(i);
+            nm = Integer.toString(a);
+            fv1.add(nm);
+        }
+        
+        for(int i=0 ; i<v2.size() ; i++)
+        {
+            a = (int)v2.get(i);
+            nm = Integer.toString(a);
+            fv2.add(nm);
+        }
+        
+        for(int i=0 ; i<dif.size() ; i++)
+        {
+            a = (int)dif.get(i);
+            nm = Integer.toString(a);
+            fd.add(nm);
+        }
     }
     
 }

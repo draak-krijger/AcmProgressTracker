@@ -36,10 +36,13 @@ public abstract class Input
     
     
     
-    String us , cp , str = "*Please wait while parsing data ...." ;
+    public String us , cp , str = "*Please wait while parsing data ...." ;
     URL us_u , cp_u ;
-    CollectingDatafromServer cds ;
-    boolean isk ;
+    public CollectingDatafromServer cds ;
+    public boolean isk ;
+    public ArrayList fv1 = new ArrayList() , fv2 = new ArrayList() , fd = new ArrayList() ;
+    public ArrayList dif = new ArrayList();
+    public AddProgressBar pb ;
     
     public void showAll(int judge)
     {
@@ -113,7 +116,7 @@ public abstract class Input
         window.show();
     }
     
-    boolean is_empty(String str)
+    public boolean is_empty(String str)
     {
         if(str.length() == 0)
             return true ;
@@ -123,11 +126,10 @@ public abstract class Input
     
     abstract boolean is_valid(String st);
     abstract void next_window(ArrayList v1,ArrayList v2);
+   
     
-    void check(int judge)
+    public void check(int judge)
     {
-        
-        
         if(is_empty(us) || is_empty(cp))
         {
             Error er = new Error();
@@ -138,7 +140,7 @@ public abstract class Input
         {
             isk = false ;
             cds = new CollectingDatafromServer(judge, us, cp);
-            AddProgressBar pb = new AddProgressBar();
+            pb = new AddProgressBar();
             
             pb.window.setOnCloseRequest(e -> {
                 cds.stop();
@@ -146,22 +148,22 @@ public abstract class Input
                 return ;
             });
             
-            tsk.setOnSucceeded(event -> {
-                
-                pb.window.close();
-                
-                if(isk)
-                    return ;
-                
-                if(cds.is_valid == 1)
-                    next_window(cds.v1,cds.v2);
-            
-                else
-                {
-                    Error er = new Error();
-                    er.show();
-                }
-            });
+//            tsk.setOnSucceeded(event -> {
+//                
+//                pb.window.close();
+//                
+//                if(isk)
+//                    return ;
+//                
+//                if(cds.is_valid == 1)
+//                    next_window(cds.v1,cds.v2);
+//            
+//                else if(cds.is_valid == 0)
+//                {
+//                    Error er = new Error();
+//                    er.show();
+//                }
+//            });
             
             pb.show();
             
@@ -170,7 +172,7 @@ public abstract class Input
         }
     }
     
-    Task tsk = new Task<Void>()
+    public Task tsk = new Task<Void>()
     {   
         @Override
         protected Void call() 
