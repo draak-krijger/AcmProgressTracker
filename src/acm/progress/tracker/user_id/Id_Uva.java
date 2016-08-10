@@ -3,6 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package acm.progress.tracker.user_id;
 
 import java.io.BufferedReader;
@@ -47,6 +48,7 @@ public class Id_Uva
         {
             String line ;
             int len ;
+            int tps = 0 ;
             
             while((line = bf.readLine()) != null)
             {
@@ -66,7 +68,9 @@ public class Id_Uva
                             name += line.charAt(i);
                         }
                         
-                        else if((line.charAt(i) >= 'A' && line.charAt(i) <= 'Z') || (line.charAt(i) >= 'a' && line.charAt(i) <= 'z'))
+//                        else if((line.charAt(i) >= 'A' && line.charAt(i) <= 'Z') || (line.charAt(i) >= 'a' && line.charAt(i) <= 'z'))
+                        
+                        else if(line.charAt(i) != ' ')
                         {
                             ok2 = true ;
                             name = "" ;
@@ -76,10 +80,10 @@ public class Id_Uva
                     
                     else
                     {
-                        if(tstr.length() > 5)
+                        if(tstr.length() > 8)
                             tstr = tstr.substring(1);
                         
-                        if(tstr.equals("title"))
+                        if(tstr.equals("title\":\""))
                             ok1 = true ;
                     }
                 }

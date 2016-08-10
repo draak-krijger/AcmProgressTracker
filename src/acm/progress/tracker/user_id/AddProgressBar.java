@@ -30,7 +30,7 @@ public class AddProgressBar
         window.setResizable(false);
         window.getIcons().add(ico);
         ProgressIndicator pb = new ProgressIndicator();
-        pb.setPrefSize(200, 50);
+        pb.setPrefSize(400, 130);
         pb.setProgress(-1.0);
         Label lb = new Label("Progressing . . .");
         VBox vb = new VBox();
@@ -40,7 +40,7 @@ public class AddProgressBar
         
         window.initModality(Modality.APPLICATION_MODAL);
         vb.setStyle("-fx-background: black;");
-        Scene scn = new Scene(vb,250,70);
+        Scene scn = new Scene(vb,400,130);
         scn.getStylesheets().add("stylesheet/mainwindow.css");
         window.setScene(scn);
         window.show();

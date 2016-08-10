@@ -24,6 +24,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -51,7 +52,7 @@ public class AcmProgressTracker extends Application {
         th = new work();
         window = primaryStage ;
         window.setTitle("Acm Progress Tracker");
-        window.setMinWidth(800);
+        window.setMinWidth(1080);
         window.setMinHeight(500);
         Image ico = new Image("images/acm.png");
         window.getIcons().add(ico);
@@ -113,7 +114,7 @@ public class AcmProgressTracker extends Application {
         Difference.setCellValueFactory(new PropertyValueFactory<TableRow,String>("Difference"));
         
         TableColumn problem_name = new TableColumn("Problem Name");
-        problem_name.setPrefWidth(100);
+        problem_name.setMinWidth(200);
         problem_name.setCellValueFactory(new PropertyValueFactory<TableRow,String>("ProblemName"));
         
         Button save = new Button("SAVE");
@@ -124,7 +125,7 @@ public class AcmProgressTracker extends Application {
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         
         VBox vb2 = new VBox(10);
-        vb2.setPrefWidth(500);
+        vb2.setMinWidth(800);
         vb2.getChildren().addAll(table_head,table,save);
         vb2.setAlignment(Pos.CENTER);
         /**
@@ -133,7 +134,7 @@ public class AcmProgressTracker extends Application {
         
         HBox hb = new HBox(10);
         hb.getChildren().addAll(Vb1,vb2);
-        hb.setMinWidth(1000);
+        hb.setMinWidth(1100);
         hb.setMinHeight(1100);
         
         /**
@@ -159,7 +160,8 @@ public class AcmProgressTracker extends Application {
                     
                 }
             }
-            
+            list.clear();
+            table.refresh();
             uva();
             judge_id = 0 ;
         });
@@ -184,6 +186,9 @@ public class AcmProgressTracker extends Application {
                 }
             }
             
+            list.clear();
+            table.refresh();
+            
             hdu();
             judge_id = 1 ;
         });
@@ -206,6 +211,9 @@ public class AcmProgressTracker extends Application {
                     
                 }
             }
+            
+            list.clear();
+            table.refresh();
             
             codeforces();
             judge_id = 2 ;
@@ -231,6 +239,9 @@ public class AcmProgressTracker extends Application {
                 }
             }
             
+            list.clear();
+            table.refresh();
+            
             poj();
             judge_id = 3 ;
         });
@@ -255,6 +266,9 @@ public class AcmProgressTracker extends Application {
                 }
             }
             
+            list.clear();
+            table.refresh();
+            
             timus();
             judge_id = 4 ;
         });
@@ -263,6 +277,9 @@ public class AcmProgressTracker extends Application {
          * here we set scene in our stage
          */    
 //        hb.setStyle("-fx-background: black;");
+        
+//        GridPane gd = new GridPane();
+//        gd.getChildren().addAll(hb);
         Scene scn = new Scene(hb,700,450);
 //        scn.getStylesheets().add("stylesheet/mainwindow.css");
         window.setResizable(false);
