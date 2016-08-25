@@ -10,7 +10,7 @@ import java.io.InputStreamReader;
 import java.net.URL;
 
 /**
- *
+ * collect problem name from timus online judge 
  * @author RONIN-47
  */
 public class Id_Timus 
@@ -22,11 +22,19 @@ public class Id_Timus
     InputStreamReader is ;
     BufferedReader bf ;
      
+    /**
+     *
+     * @param problem_id id of problem which name we want 
+     */
     public Id_Timus(String problem_id)
     {
         this.problem_id = problem_id ;
     }
      
+    /**
+     *
+     * @return problem name 
+     */
     public String get_name()
     {
         tstr = "" ;

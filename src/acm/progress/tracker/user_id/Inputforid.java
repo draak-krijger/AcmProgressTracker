@@ -25,8 +25,8 @@ import javafx.stage.Stage;
 import javax.xml.stream.XMLInputFactory;
 
 /**
- *
- * @author RONIN-47
+ *  this class is same as input but its for id ;
+ * @author RONIN-47 
  */
 public abstract class Inputforid 
 {   
@@ -35,6 +35,10 @@ public abstract class Inputforid
     CollectingDatafromServer cds ;
     boolean isk ;
     
+    /**
+     *
+     * @param judge
+     */
     public void showAll(int judge)
     {
         Stage window = new Stage();

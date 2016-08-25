@@ -7,9 +7,14 @@ package acm.progress.tracker;
 
 import acm.progress.tracker.user_id.* ;
 import acm.progress.tracker.user_id.Error ;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.Writer;
 import static java.lang.Integer.max;
 import java.util.ArrayList;
-import java.util.Map;
+import java.util.Collection;
+import java.util.Collections;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -19,17 +24,19 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
-import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 
 /**
  * This class is first class where our application start.
@@ -38,14 +45,15 @@ import javafx.stage.Stage;
 public class AcmProgressTracker extends Application {
     
     Stage window ;
-    private TableView<TableRow>table = new TableView<TableRow>() ;
-    private final ObservableList<TableRow>list = FXCollections.observableArrayList() ;
+    private TableView<Table_Row>table = new TableView<Table_Row>() ;
+    private final ObservableList<Table_Row>list = FXCollections.observableArrayList() ;
     String us , cp ;
     TextField user_name_input = new TextField();
     TextField compare_id_input = new TextField();
     int judge_id ;
     ArrayList differn = new ArrayList();
     work th ;
+    int cnt ;
     
     @Override
     public void start(Stage primaryStage) {
@@ -92,8 +100,6 @@ public class AcmProgressTracker extends Application {
         
         for(int i=0 ; i<5 ; i++)
         {
-//            oj[i].setMinWidth(50);
-//            oj[i].setMinHeight(50);
             oj[i].setAlignment(Pos.CENTER);
             oj[i].setPrefWidth(100);
             Vb1.getChildren().add(oj[i]);
@@ -103,25 +109,61 @@ public class AcmProgressTracker extends Application {
         
         TableColumn Me = new TableColumn("Me");
         Me.setPrefWidth(50);
-        Me.setCellValueFactory(new PropertyValueFactory<TableRow,String>("Me"));
+        Me.setCellValueFactory(new PropertyValueFactory<Table_Row,String>("Me"));
         
         TableColumn Friend = new TableColumn("Friend");
         Friend.setPrefWidth(50);
-        Friend.setCellValueFactory(new PropertyValueFactory<TableRow,String>("Friend"));
-        
-        TableColumn Difference = new TableColumn("Difference");
-        Difference.setPrefWidth(50);
-        Difference.setCellValueFactory(new PropertyValueFactory<TableRow,String>("Difference"));
+        Friend.setCellValueFactory(new PropertyValueFactory<Table_Row,String>("Friend"));
         
         TableColumn problem_name = new TableColumn("Problem Name");
         problem_name.setMinWidth(200);
-        problem_name.setCellValueFactory(new PropertyValueFactory<TableRow,String>("ProblemName"));
+        problem_name.setCellValueFactory(new PropertyValueFactory<Table_Row,String>("ProblemName"));
         
         Button save = new Button("SAVE");
         save.setAlignment(Pos.CENTER);
         
+        table.setRowFactory(tv -> new TableRow<Table_Row>() {
+            @Override
+            public void updateItem(Table_Row item, boolean empty) {
+                super.updateItem(item, empty);
+                
+                boolean temp_ok = true ;
+                
+                if(item == null)
+                    return ;
+                
+                if(item.getMe() != null)
+                {
+                    String str__ = item.getMe();
+                    
+                    if(str__.length() == 0)
+                    {
+                        setStyle("-fx-background-color:#FC535C");
+                        temp_ok = false ;
+                    }
+                }
+                
+                if(item.getFriend() != null)
+                {
+                    String st_r = item.getFriend() ;
+                    
+                    if(st_r.length() == 0 && temp_ok == true)
+                    {
+                        setStyle("-fx-background-color:#49FE55");
+                        temp_ok = false ;
+                    }
+                }
+                
+                if(temp_ok)
+                {
+                    setStyle("-fx-background-color:#70C5FF");
+                }
+            }
+        });
+        
+        
         table.setItems(list);
-        table.getColumns().addAll(Me,Friend,Difference,problem_name);
+        table.getColumns().addAll(Me,Friend,problem_name);
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         
         VBox vb2 = new VBox(10);
@@ -138,16 +180,34 @@ public class AcmProgressTracker extends Application {
         hb.setMinHeight(1100);
         
         /**
-         * In this section we set oj button action
+         * This is save Button 
+         * by clicking we write data in table view in a file .
          */
         
+        save.setOnAction(e -> {
+            try
+            {
+                WriteExcel();
+            }
+            
+            catch(Exception ex)
+            {
+                FileError fl = new FileError();
+                fl.show();
+            }
+        });
+        
         /**
-         *  this is for uva online judge button 
-         *  when we click here it create a Uva class and show user name input window
+         * Here we set action on clicking online judge button . 
+         * oj[0] for uva online judge
+         * oj[1] for hdu online judge
+         * oj[2] for codeforces online judge
+         * oj[3] for poj online judge
+         * oj[4] for timus online judge
          */
         
         oj[0].setOnAction(e -> {
-//            System.out.println(th.isAlive());
+
             if(th.isAlive())
             {
                 try
@@ -160,6 +220,7 @@ public class AcmProgressTracker extends Application {
                     
                 }
             }
+            cnt = 0 ;
             list.clear();
             table.refresh();
             uva();
@@ -276,15 +337,28 @@ public class AcmProgressTracker extends Application {
         /**
          * here we set scene in our stage
          */    
-//        hb.setStyle("-fx-background: black;");
-        
-//        GridPane gd = new GridPane();
-//        gd.getChildren().addAll(hb);
         Scene scn = new Scene(hb,700,450);
-//        scn.getStylesheets().add("stylesheet/mainwindow.css");
+
         window.setResizable(false);
         window.setScene(scn);
         window.show();
+        
+        window.setOnCloseRequest(e -> {
+            if(th.isAlive())
+            {
+                try
+                {
+                    th.stop();
+                }
+                
+                catch(Exception ex)
+                {
+                    
+                }
+            }
+            
+            window.close();
+        });
     }
 
     /**
@@ -293,6 +367,11 @@ public class AcmProgressTracker extends Application {
     public static void main(String[] args) {
         launch(args);
     }
+    
+    /**
+     * this method called when we click in uva button .
+     * by this method we collect data from uva online judge and set them in out table .
+     */
     
     void uva()
     {
@@ -316,31 +395,29 @@ public class AcmProgressTracker extends Application {
                     
                     list.clear();
                     
-                    int mx = max((int)uv.fv1.size(),(int)uv.fv2.size());
                     
                     String me , fnd , differ ,wait ;
                     
                     differn.clear();
+                    Collections.sort(uv.fd);
                     
-                    for(int i=0 ; i<mx ; i++)
+                    for(int i=0 ; i<uv.fd.size() ; i++)
                     {
-                        me = "NULL" ;
-                        fnd = "NULL" ;
-                        differ = "NULL" ;
-                        wait = "NULL" ;
+                        me = "" ;
+                        fnd = "" ;
+                        differ = "" ;
+                        wait = "wait" ;
                         
-                        if(i<uv.fv1.size())
-                            me = (String)uv.fv1.get(i);
+                        differ = (String)uv.fd.get(i);
+                        differn.add(Integer.parseInt(differ));
                         
-                        if(i<uv.fv2.size())
-                            fnd = (String)uv.fv2.get(i);
+                        if(uv.fv1.contains(differ))
+                            me = differ ;
                         
-                        if(i<uv.fd.size()){
-                            differ = (String)uv.fd.get(i);
-                            differn.add(Integer.parseInt(differ));
-                            wait = "wait" ;
-                        }
-                        list.add(new TableRow(me,fnd,differ,wait));
+                        if(uv.fv2.contains(differ))
+                            fnd = differ ;
+                        
+                        list.add(new Table_Row(me,fnd,wait));
                     }
                     
                     table.refresh();
@@ -355,6 +432,11 @@ public class AcmProgressTracker extends Application {
                 }
             });
     }
+    
+    /**
+     * this method called when we click in hdu button .
+     * by this method we collect data from hdu online judge and set them in out table .
+     */
     
     void hdu()
     {
@@ -378,33 +460,28 @@ public class AcmProgressTracker extends Application {
                     
                     list.clear();
                     
-                    int mx = max((int)uv.fv1.size(),(int)uv.fv2.size());
-                    
                     String me , fnd , differ , wait ;
-                    
+                    Collections.sort(uv.fd);
                     differn.clear();
                     
-                    for(int i=0 ; i<mx ; i++)
+                    for(int i=0 ; i<uv.fd.size() ; i++)
                     {
-                        me = "NULL" ;
-                        fnd = "NULL" ;
-                        differ = "NULL" ;
-                        wait = "NULL" ;
+                        me = "" ;
+                        fnd = "" ;
+                        differ = "" ;
+                        wait = "wait" ;
                         
                         
-                        if(i<uv.fv1.size())
-                            me = (String)uv.fv1.get(i);
+                        differ = (String)uv.fd.get(i);
+                        differn.add(Integer.parseInt(differ));
                         
-                        if(i<uv.fv2.size())
-                            fnd = (String)uv.fv2.get(i);
+                        if(uv.fv1.contains(differ))
+                            me = differ ;
                         
-                        if(i<uv.fd.size()){
-                            differ = (String)uv.fd.get(i);
-                            differn.add(Integer.parseInt(differ));
-                            wait = "wait";
-                        }
+                        if(uv.fv2.contains(differ))
+                            fnd = differ ;
                         
-                        list.add(new TableRow(me,fnd,differ,wait));
+                        list.add(new Table_Row(me,fnd,wait));
                     }
                     
                     table.refresh();
@@ -419,6 +496,11 @@ public class AcmProgressTracker extends Application {
                 }
             });
     }
+    
+    /**
+     * this method called when we click in Codeforces button .
+     * by this method we collect data from Codeforces online judge and set them in out table .
+     */
     
     void codeforces()
     {
@@ -442,30 +524,25 @@ public class AcmProgressTracker extends Application {
                     uv.next_window(uv.cds.v1,uv.cds.v2);
                     
                     list.clear();
-//                    System.out.println(uv.fd.size() + " " + uv.fpname.size());
-                    int mx = max((int)uv.fv1.size(),(int)uv.fv2.size());
-                    
+
                     String me , fnd , differ , wait ;
                     
-                    for(int i=0 ; i<mx ; i++)
+                    for(int i=0 ; i<uv.fd.size() ; i++)
                     {
-                        me = "NULL" ;
-                        fnd = "NULL" ;
-                        differ = "NULL" ;
-                        wait = "NULL" ;
+                        me = "" ;
+                        fnd = "" ;
+                        differ = "" ;
+                        wait = (String)uv.pname.get(i) ;
                         
-                        if(i<uv.fv1.size())
-                            me = (String)uv.fv1.get(i);
+                        differ = (String)uv.fd.get(i);
                         
-                        if(i<uv.fv2.size())
-                            fnd = (String)uv.fv2.get(i);
+                        if(uv.fv1.contains(differ))
+                            me = differ ;
                         
-                        if(i<uv.fd.size()){
-                            differ = (String)uv.fd.get(i);
-                            wait = (String)uv.fpname.get(i) ;
-                        }
+                        if(uv.fv2.contains(differ))
+                            fnd = differ ;
                         
-                        list.add(new TableRow(me,fnd,differ,wait));
+                        list.add(new Table_Row(me,fnd,wait));
                     }
                     
                     table.refresh();
@@ -477,6 +554,11 @@ public class AcmProgressTracker extends Application {
                 }
             });
     }
+    
+    /**
+     * this method called when we click in poj button .
+     * by this method we collect data from poj online judge and set them in out table .
+     */
     
     void poj()
     {
@@ -500,31 +582,29 @@ public class AcmProgressTracker extends Application {
                     
                     list.clear();
                     
-                    int mx = max((int)uv.fv1.size(),(int)uv.fv2.size());
                     
                     String me , fnd , differ , wait ;
                     
                     differn.clear();
+                    Collections.sort(uv.fd);
                     
-                    for(int i=0 ; i<mx ; i++)
+                    for(int i=0 ; i<uv.fd.size() ; i++)
                     {
-                        me = "NULL" ;
-                        fnd = "NULL" ;
-                        differ = "NULL" ;
-                        wait = "NULL" ;
+                        me = "" ;
+                        fnd = "" ;
+                        differ = "" ;
+                        wait = "wait" ;
                         
-                        if(i<uv.fv1.size())
-                            me = (String)uv.fv1.get(i);
+                        differ = (String)uv.fd.get(i);
+                        differn.add(Integer.parseInt(differ));
                         
-                        if(i<uv.fv2.size())
-                            fnd = (String)uv.fv2.get(i);
+                        if(uv.fv1.contains(differ))
+                            me = differ ;
                         
-                        if(i<uv.fd.size()){
-                            differ = (String)uv.fd.get(i);
-                            differn.add(Integer.parseInt(differ));
-                            wait = "wait";
-                        }
-                        list.add(new TableRow(me,fnd,differ,wait));
+                        if(uv.fv2.contains(differ))
+                            fnd = differ ;
+                        
+                        list.add(new Table_Row(me,fnd,wait));
                     }
                     
                     table.refresh();
@@ -539,6 +619,11 @@ public class AcmProgressTracker extends Application {
                 }
             });
     }
+    
+    /**
+     * this method called when we click in timus button .
+     * by this method we collect data from timus online judge and set them in out table .
+     */
     
     void timus()
     {
@@ -562,32 +647,29 @@ public class AcmProgressTracker extends Application {
                     
                     list.clear();
                     
-                    int mx = max((int)uv.fv1.size(),(int)uv.fv2.size());
                     
                     String me , fnd , differ , wait ;
                     
                     differn.clear();
+                    Collections.sort(uv.fd);
                     
-                    for(int i=0 ; i<mx ; i++)
+                    for(int i=0 ; i<uv.fd.size() ; i++)
                     {
-                        me = "NULL" ;
-                        fnd = "NULL" ;
-                        differ = "NULL" ;
-                        wait = "NULL" ;
+                        me = "" ;
+                        fnd = "" ;
+                        differ = "" ;
+                        wait = "wait" ;
                         
-                        if(i<uv.fv1.size())
-                            me = (String)uv.fv1.get(i);
+                        differ = (String)uv.fd.get(i);
+                        differn.add(Integer.parseInt(differ));
                         
-                        if(i<uv.fv2.size())
-                            fnd = (String)uv.fv2.get(i);
+                        if(uv.fv1.contains(differ))
+                            me = differ ;
                         
-                        if(i<uv.fd.size()){
-                            differ = (String)uv.fd.get(i);
-                            differn.add(Integer.parseInt(differ));
-                            wait = "wait" ;
-                        }
+                        if(uv.fv2.contains(differ))
+                            fnd = differ ;
                         
-                        list.add(new TableRow(me,fnd,differ,wait));
+                        list.add(new Table_Row(me,fnd,wait));
                     }
                     
                     table.refresh();
@@ -603,11 +685,16 @@ public class AcmProgressTracker extends Application {
             });
     }
     
+    /**
+     * this method is only for collecting problem name from 
+     * uva online judge .
+     */
+    
     void uva_update()
     {
         int a ;
         String str ;
-        System.out.println("uva update "+differn.size());
+
         for(int i=0 ; i<differn.size() ; i++)
         {
             a = (int)differn.get(i);
@@ -617,6 +704,11 @@ public class AcmProgressTracker extends Application {
             table.refresh();
         }
     }
+    
+    /**
+     * this method is only for collecting problem name from 
+     * poj online judge .
+     */
     
     void poj_update()
     {
@@ -634,6 +726,11 @@ public class AcmProgressTracker extends Application {
         }
     }
     
+    /**
+     * this method is only for collecting problem name from 
+     * hdu online judge .
+     */
+    
     void hdu_update()
     {
         int a ;
@@ -649,6 +746,11 @@ public class AcmProgressTracker extends Application {
             table.refresh();
         }
     }
+    
+    /**
+     * this method is only for collecting problem name from 
+     * timus online judge .
+     */
     
     void timus_update()
     {
@@ -666,35 +768,9 @@ public class AcmProgressTracker extends Application {
         }
     }
     
-    Task task = new Task<Void>()
-    {   
-        @Override
-        protected Void call() 
-        {
-            System.out.println("Task");
-            try
-            {
-                if(judge_id == 0)
-                    uva_update();
-                
-                else if(judge_id == 1)
-                    hdu_update();
-                
-                else if(judge_id == 3)
-                    poj_update();
-                
-                else
-                    timus_update();
-            }
-            
-            catch(Exception ex)
-            {
-                //  
-            }
-            
-            return null ;
-        } 
-    };
+    /**
+     * this new thread for collecting problem name in background . 
+     */
     
     class work extends Thread
     {
@@ -712,5 +788,35 @@ public class AcmProgressTracker extends Application {
             else
                 timus_update();
         }
+    }
+    
+    /**
+     * WriteExcel is only for writing information in .csv file 
+     * if there is any problem in writing file then it throws excepton 
+     * @throws Exception 
+     */
+    
+    public void WriteExcel() throws Exception {
+        Writer writer = null;
+        try {
+            File file = new File("C:\\Person.csv.");
+            file.createNewFile();
+            writer = new BufferedWriter(new FileWriter(file));
+            for (Table_Row person : list) {
+
+                String text = person.getMe() + "       " + person.getFriend()+ "       " + person.getProblemName()+"\n";
+
+
+                
+                writer.write(text);
+            }
+        } catch (Exception ex) {
+           throw ex ;
+        }
+        finally {
+           
+            writer.flush();
+             writer.close();
+        } 
     }
 }

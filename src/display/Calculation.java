@@ -30,21 +30,18 @@ public class Calculation
         Collections.sort(user1);
         Collections.sort(user2);
         
-        int i=0 , j = 0 ;
+        int a ;
         
-        for(;i<user2.size(); i++)
+        for(int i=0 ; i<user1.size() ; i++)
+            difference_with_second.add(user1.get(i));
+        
+        
+        for(int i=0  ; i<user2.size() ; i++)
         {
-            while(j<user1.size() && (int)user2.get(i) > (int)user1.get(j))
-                j++;
+            a = (int)user2.get(i);
             
-            if(j>=user1.size())
-            {
-                difference_with_second.add(user2.get(i));
-                continue ;
-            }
-            
-            if(j<user1.size() && (int)user2.get(i) != (int)user1.get(j))
-                difference_with_second.add(user2.get(i));
+            if(!difference_with_second.contains(a))
+                difference_with_second.add(a);
         }
     }
 }

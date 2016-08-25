@@ -8,21 +8,19 @@ package acm.progress.tracker.user_id;
 import javafx.beans.property.SimpleStringProperty;
 
 /**
- *
+ * we create object of TableRow only for our tableview row .
  * @author RONIN-47
  */
-public class TableRow
+public class Table_Row
 {
         private final SimpleStringProperty Me ;
         private final SimpleStringProperty Friend ;
-        private final SimpleStringProperty Difference ;
         private final SimpleStringProperty ProblemName ;
         
-        public TableRow(String Me,String Friend,String Difference,String pn)
+        public Table_Row(String Me,String Friend,String pn)
         {
             this.Me = new SimpleStringProperty(Me) ;
             this.Friend = new SimpleStringProperty(Friend) ;
-            this.Difference = new SimpleStringProperty(Difference);
             this.ProblemName = new SimpleStringProperty(pn);
         }
         
@@ -41,10 +39,6 @@ public class TableRow
             Friend.set(f);
         }
         
-        public void setDifference(String d)
-        {
-            Difference.set(d);
-        }
         
         public String getProblemName()
         {
@@ -61,8 +55,4 @@ public class TableRow
             return Friend.get();
         }
         
-        public String getDifference()
-        {
-            return Difference.get();
-        }
 }

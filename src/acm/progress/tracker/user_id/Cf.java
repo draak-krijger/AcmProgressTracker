@@ -23,8 +23,34 @@ public class Cf extends Input
     BufferedReader bf  ;
     boolean fok = false , tok = false , tok1 = false , tok2 = false , num_ok = false , bln1 = true , bln2 = false , bln3 = false ;
     
-    public ArrayList v1 = new ArrayList() , v2 = new ArrayList() , pname = new ArrayList() , drf = new ArrayList() , fpname = new ArrayList();
+    public ArrayList v1 = new ArrayList() ,
+
+    /**
+     * user2 solved list
+     */
+    v2 = new ArrayList() ,
+
+    /**
+     *  problem name with repetition 
+     */
+    pname = new ArrayList() ,
+
+    /**
+     * difference 
+     */
+    drf = new ArrayList() ,
+
+    /**
+     *  final problem name without repetition
+     */
+    fpname = new ArrayList();
     
+    /**
+     *
+     * @param str is user name which we check
+     * @return is it exist ? 
+     * if exist then it collect solve list of this user
+     */
     @Override
     public boolean is_valid(String str) 
     {
@@ -67,8 +93,8 @@ public class Cf extends Input
                 
                 for(int i=0 ; i<len ; i++)
                 {
-                    if(fok)
-                    {
+//                    if(fok)
+//                    {
                         if(bln1)
                         {
                             name += line.charAt(i) ;
@@ -107,7 +133,7 @@ public class Cf extends Input
                                 } 
                             }
                         }
-                    }
+//                    }
                     
                     if(tok)
                     {
@@ -128,12 +154,11 @@ public class Cf extends Input
                             {
                                 bln1 = true ;
                                 
-                                if(!v2.contains(num))
+                                if(!v2.contains(num)){
                                     v2.add(num);
-                                
-//                                if(num == 4550)
-//                                System.out.println(v1.contains(num));
-                                if(!v1.contains(num))
+                                }
+
+                                if(!drf.contains(num))
                                 {
                                     drf.add(num);
                                     pname.add(problem_name);
@@ -142,8 +167,11 @@ public class Cf extends Input
                             
                             else
                             {
-                                if(!v1.contains(num))
+                                if(!v1.contains(num)){
                                     v1.add(num);
+                                    drf.add(num);
+                                    pname.add(problem_name);
+                                }
                             }
                         }
                     }
@@ -211,18 +239,25 @@ public class Cf extends Input
         return true ;
     }
     
+    /**
+     *
+     * @param v1 difference 
+     * @param v2 problem name
+     */
     public void save_data(ArrayList v1,ArrayList v2)
     {
         drf = v1 ;
         pname = v2 ;
     }
 
+    /**
+     *
+     * @param v1 user1 solved list
+     * @param v2 user2 solved list
+     */
     @Override
     public void next_window(ArrayList v1,ArrayList v2) 
     {
-//        System.out.println(drf.size());
-//        ShowDifference diff = new ShowDifference(v1, v2);
-//        diff.find_differences();
         dif = drf ;
         
         Collections.sort(v1);
@@ -231,7 +266,7 @@ public class Cf extends Input
         int a , ch ;
         
         String str ;
-        
+
         for(int i=0 ; i<dif.size() ; i++)
         {
             a = (int)dif.get(i);
@@ -244,7 +279,7 @@ public class Cf extends Input
             ch = a%10 ;
             a /= 10 ;
             str = Integer.toString(a);
-            str += " " ;
+            str += "-" ;
             str += Character.toString((char) ('A'+ch));
             //System.out.println(str);
             fd.add(str);
@@ -261,7 +296,7 @@ public class Cf extends Input
             ch = a%10 ;
             a /= 10 ;
             str = Integer.toString(a);
-            str += " " ;
+            str += "-" ;
             str += Character.toString((char) ('A'+ch));
             //System.out.println(str);
             fv1.add(str);
@@ -278,7 +313,7 @@ public class Cf extends Input
             ch = a%10 ;
             a /= 10 ;
             str = Integer.toString(a);
-            str += " " ;
+            str += "-" ;
             str += Character.toString((char) ('A'+ch));
             //System.out.println(str);
             fv2.add(str);

@@ -17,11 +17,15 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 /**
- *
+ * Show progress Bar
  * @author RONIN-47
  */
 public class AddProgressBar 
 {
+
+    /**
+     *  Stage name window
+     */
     public Stage window = new Stage() ;
     
     void show()
@@ -29,6 +33,7 @@ public class AddProgressBar
         Image ico = new Image("images/acm.png");
         window.setResizable(false);
         window.getIcons().add(ico);
+        window.setTitle("Progressing");
         ProgressIndicator pb = new ProgressIndicator();
         pb.setPrefSize(400, 130);
         pb.setProgress(-1.0);

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package acm.progress.tracker.user_id;
+package acm.progress.tracker;
 
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -16,19 +16,21 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 /**
- * this class show error message 
+ *
  * @author RONIN-47
+ * FileError class has only show method .
+ * when any problem create in writing file then we call show method of FileError
  */
-public class Error 
+public class FileError 
 {
 
     /**
-     *  show method create scene with error message
+     * This stage show error message
      */
     public void show()
     {
         Stage window = new Stage();
-        window.setTitle("Error !!");
+        window.setTitle("Error!!");
         Image ico = new Image("images/acm.png");
         window.getIcons().add(ico);
         
@@ -37,7 +39,7 @@ public class Error
         window.setMaxHeight(130);
         window.setMaxWidth(400);
         
-        Label lb = new Label("Problem with user name or Internet Connection.");
+        Label lb = new Label("Problem while writting in a File.");
         Button bt = new Button("OK");
         lb.setTextFill(Color.RED);
         

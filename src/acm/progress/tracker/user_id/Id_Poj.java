@@ -10,7 +10,7 @@ import java.io.InputStreamReader;
 import java.net.URL;
 
 /**
- *
+ *  collect problem name from poj 
  * @author RONIN-47
  */
 public class Id_Poj 
@@ -22,11 +22,19 @@ public class Id_Poj
     InputStreamReader is ;
     BufferedReader bf ;
      
+    /**
+     *
+     * @param problem_id id number of problem which we want
+     */
     public Id_Poj(String problem_id)
     {
         this.problem_id = problem_id ;
     }
      
+    /**
+     *
+     * @return problem name 
+     */
     public String get_name()
     {
         tstr = "" ;

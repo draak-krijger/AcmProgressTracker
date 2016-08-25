@@ -10,7 +10,7 @@ import java.io.* ;
 import java.util.* ;
 
 /**
- *
+ *  this for collecting data from poj
  * @author RONIN-47
  */
 public class Poj extends Input
@@ -21,8 +21,19 @@ public class Poj extends Input
     BufferedReader bf , id1 , id2 ;
     boolean fok = false , tok = true ;
     
-    public ArrayList v1 = new ArrayList() , v2 = new ArrayList();
+    public ArrayList v1 = new ArrayList() ,
+
+    /**
+     *
+     */
+    v2 = new ArrayList();
     
+    /**
+     *
+     * @param str means user name
+     * @return is this user name is valid 
+     * create solve list
+     */
     @Override
     public boolean is_valid(String str) 
     {
@@ -110,6 +121,12 @@ public class Poj extends Input
         
         return true ;
     }
+
+    /**
+     *
+     * @param v1 user1 solved list
+     * @param v2 user2 solved list 
+     */
     @Override
     public void next_window(ArrayList v1,ArrayList v2) 
     {
@@ -141,5 +158,4 @@ public class Poj extends Input
             fd.add(nm);
         }
     }
-    
 }

@@ -11,13 +11,17 @@ import java.util.* ;
 import java.net.* ;
 
 /**
- *
+ *  collecting solved list 
  * @author RONIN-47
  */
 public class UvaSolvedProblem 
 {
     Map<Integer,Integer> mymap = new HashMap<Integer,Integer>();
     
+    /**
+     *
+     * @param mp maping value of id and number 
+     */
     public UvaSolvedProblem(Map<Integer,Integer> mp)
     {
         mymap = mp ;

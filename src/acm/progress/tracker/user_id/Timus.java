@@ -12,7 +12,7 @@ import java.util.* ;
 import display.* ;
 
 /**
- *
+ *  collecting data from timus 
  * @author RONIN-47
  */
 public class Timus extends Input
@@ -23,7 +23,18 @@ public class Timus extends Input
     URL tm ;
     InputStreamReader is;
     
-    public ArrayList v1 = new ArrayList() , v2 = new ArrayList();
+    public ArrayList v1 = new ArrayList() ,
+
+    /**
+     *
+     */
+    v2 = new ArrayList();
+    
+    /**
+     *
+     * @param str user id 
+     * @return is this user id is valid 
+     */
     
     @Override
     public boolean is_valid(String str)
@@ -124,7 +135,11 @@ public class Timus extends Input
         return true ;
     }
     
-
+    /**
+     *
+     * @param v1 user1 solved list
+     * @param v2 user2 solved list
+     */
     @Override
     public void next_window(ArrayList v1,ArrayList v2) 
     {

@@ -10,23 +10,31 @@ import java.io.InputStreamReader;
 import java.net.URL;
 
 /**
- *
+ * this class is for collecting problem name from judge 
  * @author RONIN-47
  */
 public class Id_Hdu 
 {
-    String ur = "http://acm.hdu.edu.cn/showproblem.php?pid=" , problem_id , name = "Failed" , tstr ;
+    String ur = "http://acm.split.hdu.edu.cn/showproblem.php?pid=" , problem_id , name = "Failed" , tstr ;
     boolean ok1 = false , ok2 = false ;
     
     URL tm ;
     InputStreamReader is ;
     BufferedReader bf ;
      
+    /**
+     *
+     * @param problem_id means id number of problem
+     */
     public Id_Hdu(String problem_id)
     {
         this.problem_id = problem_id ;
     }
      
+    /**
+     *
+     * @return problem name 
+     */
     public String get_name()
     {
         tstr = "" ;

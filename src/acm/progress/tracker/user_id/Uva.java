@@ -11,28 +11,34 @@ import java.lang.* ;
 import display.* ;
 
 /**
- *
+ *  collecting data from uva online judge 
  * @author RONIN-47
  */
 public class Uva extends Input
 {
-    public ArrayList v1 = new ArrayList() , v2 = new ArrayList();
+    public ArrayList v1 = new ArrayList() ,
+
+    /**
+     *
+     */
+    v2 = new ArrayList();
     boolean fok = false ;
     
-    UvaInitialize mp ; 
+    static UvaInitialize mpl ; 
     
+    static
     {
-        mp = new UvaInitialize();
+        mpl = new UvaInitialize();
         
         try
         {
-            mp.input();
+            mpl.input();
         }
         
         catch(Exception ex)
         {
             Error er = new Error();
-                er.show();
+            er.show();
         }
     }
     
@@ -42,11 +48,11 @@ public class Uva extends Input
         Uva_id id_col = new Uva_id();
         
         String id = id_col.get_id(str);
-        //System.out.println(id);
+
         if("0".equals(id))
             return false ;
         
-        UvaSolvedProblem solved = new UvaSolvedProblem(mp.mymap);
+        UvaSolvedProblem solved = new UvaSolvedProblem(mpl.mymap);
         
         if(!solved.generate_arr(id))
             return false ;
@@ -62,6 +68,11 @@ public class Uva extends Input
         return true ;
     }
 
+    /**
+     *
+     * @param v1 user1 solved list
+     * @param v2 user2 solved list
+     */
     @Override
     public void next_window(ArrayList v1,ArrayList v2) 
     {

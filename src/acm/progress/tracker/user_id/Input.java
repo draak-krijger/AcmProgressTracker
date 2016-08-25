@@ -38,12 +38,42 @@ public abstract class Input
     
     public String us , cp , str = "*Please wait while parsing data ...." ;
     URL us_u , cp_u ;
+
+    /**
+     *  create new thread 
+     */
     public CollectingDatafromServer cds ;
+
+    /**
+     *  if isk is false then its first time 
+     */
     public boolean isk ;
-    public ArrayList fv1 = new ArrayList() , fv2 = new ArrayList() , fd = new ArrayList() ;
+    public ArrayList fv1 = new ArrayList() ,
+
+    /**
+     *  
+     */
+    fv2 = new ArrayList() ,
+
+    /**
+     *
+     */
+    fd = new ArrayList() ;
+
+    /**
+     *
+     */
     public ArrayList dif = new ArrayList();
+
+    /**
+     *
+     */
     public AddProgressBar pb ;
     
+    /**
+     *
+     * @param judge judge id 
+     */
     public void showAll(int judge)
     {
         Stage window = new Stage();
@@ -87,28 +117,12 @@ public abstract class Input
         
         window.initModality(Modality.APPLICATION_MODAL);
         
-       /*
-        Label prog = new Label("Please wait while parshing data ..");
-        ProgressIndicator pg = new ProgressIndicator();
-        pg.setPrefSize(0,200);
-        pg.setProgress(-1.0);
-        
-        VBox pvb = new VBox(20);
-        pvb.getChildren().addAll(prog,pg);
-        pvb.setAlignment(Pos.CENTER);
-        Scene scn2 = new Scene(pvb,390,210);
-        */
         submit.setOnAction(e -> {
-            //window.setScene(scn2);
-            //window.close();
             us = user_id.getText();
             cp = compared_id.getText();
             txt.setText("");
         
             check(judge);
-            //System.out.println("ok pass");
-            //window.setScene(scn);
-            //window.show();
         });
         
         scn.getStylesheets().add("stylesheet/mainwindow.css");
@@ -116,6 +130,11 @@ public abstract class Input
         window.show();
     }
     
+    /**
+     *
+     * @param str user name 
+     * @return is it empty or not 
+     */
     public boolean is_empty(String str)
     {
         if(str.length() == 0)
@@ -127,7 +146,10 @@ public abstract class Input
     abstract boolean is_valid(String st);
     abstract void next_window(ArrayList v1,ArrayList v2);
    
-    
+    /**
+     *
+     * @param judge judge id 
+     */
     public void check(int judge)
     {
         if(is_empty(us) || is_empty(cp))
@@ -148,23 +170,6 @@ public abstract class Input
                 return ;
             });
             
-//            tsk.setOnSucceeded(event -> {
-//                
-//                pb.window.close();
-//                
-//                if(isk)
-//                    return ;
-//                
-//                if(cds.is_valid == 1)
-//                    next_window(cds.v1,cds.v2);
-//            
-//                else if(cds.is_valid == 0)
-//                {
-//                    Error er = new Error();
-//                    er.show();
-//                }
-//            });
-            
             pb.show();
             
             Thread th = new Thread(tsk);
@@ -172,6 +177,9 @@ public abstract class Input
         }
     }
     
+    /**
+     * Task for collecting data form judge  
+     */
     public Task tsk = new Task<Void>()
     {   
         @Override

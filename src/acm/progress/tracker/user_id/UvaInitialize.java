@@ -9,31 +9,80 @@ import java.io.* ;
 import java.util.* ;
 
 /**
- *
+ *  maping with problem id and problem number 
  * @author RONIN-47
  */
 public class UvaInitialize
 {
+
+    /**
+     * problem number with problem id 
+     */
     public Map <Integer,Integer> mymap = new HashMap<Integer, Integer>() ;
     
     void input() throws Exception
     {
-        Scanner cin = new Scanner(new File("pre_data/data.txt"));
-        int a = 0 , b = 0 , cont = 0 ;
+        InputStream in = getClass().getResourceAsStream("/data.txt");
+        BufferedReader input = new BufferedReader(new InputStreamReader(in));
+
+        //Scanner cin = new Scanner(new File("resources/data.txt"));
+        int a = 0 , b = 0 , cont = 0 , tp ;
         
-        while(cin.hasNextInt())
+        String line ;
+        int len ;
+        
+        while((line = input.readLine()) != null)
         {
-            b = cin.nextInt();
-            
-            if((int)(cont&1) != 0)
+            line += " " ;
+            len = line.length() ;
+
+            b = 0 ;
+            a = 0 ;
+            cont = 0 ;
+
+            for(int i=0 ;len-1>0 && i<len ; i++)
             {
-                mymap.put(a, b);
+                if(line.charAt(i) == ' ')
+                {
+                    if(a>0 && b>0)
+                    {
+                        mymap.put(a, b);
+                        a = 0 ;
+                        b = 0 ;
+                        continue;
+                    }
+                    
+                    if(a>0)
+                        cont++;
+                }
+                
+                if((int)(cont&1) != 0 && line.charAt(i) != ' ')
+                {
+                    tp = (int)(line.charAt(i) - '0') ;
+                    b = b*10 + tp ;
+                }
+                
+                else if(line.charAt(i) != ' ')
+                {
+                    tp = (int)(line.charAt(i) - '0') ;
+                    a = a*10 + tp ;
+                }    
             }
-            
-            else
-                a = b ;
-            
-            cont++;
         }
+        
+//        while(cin.hasNextInt())
+//        {
+//            b = cin.nextInt();
+//            
+//            if((int)(cont&1) != 0)
+//            {
+//                mymap.put(a, b);
+//            }
+//            
+//            else
+//                a = b ;
+//            
+//            cont++;
+//        }
     }
 }

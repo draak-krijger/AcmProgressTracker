@@ -10,7 +10,7 @@ import java.io.InputStreamReader;
 import java.net.* ;
 
 /**
- *
+ *  convert user name to id  
  * @author RONIN-47
  */
 public class Uva_id 

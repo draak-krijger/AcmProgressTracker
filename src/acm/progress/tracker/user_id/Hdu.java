@@ -11,26 +11,37 @@ import java.io.* ;
 import java.util.* ;
 
 /**
- *
+ *  this class collect data from hdu online judge
  * @author RONIN-47
  */
 public class Hdu extends Input
 {
-    String ur = "http://acm.hdu.edu.cn/userstatus.php?user=" , pat = "No such user" , cal_pat , pt2 = "unsolved" , cal_pt2 ;
+    String ur = "http://acm.split.hdu.edu.cn/userstatus.php?user=" , pat = "No such user" , cal_pat , pt2 = "unsolved" , cal_pt2 ;
     URL tm  ;
     InputStreamReader is ;
     BufferedReader bf , id1 , id2 ;
     boolean fok = false , tok = true ;
     
-    public ArrayList v1 = new ArrayList() , v2 = new ArrayList();
+    public ArrayList v1 = new ArrayList() ,
+
+    /**
+     *
+     */
+    v2 = new ArrayList();
     
+    /**
+     *
+     * @param str means user name
+     * @return is given user name is valid 
+     * it also generate solved list 
+     */
     @Override
     public boolean is_valid(String str) 
     {
         cal_pat = "" ;
         cal_pt2 = "" ;
         tok = true ;
-        
+//        System.out.println(ur+str);
         try
         {
             tm = new URL(ur+str);
@@ -123,6 +134,11 @@ public class Hdu extends Input
         return true ;
     }
 
+    /**
+     *
+     * @param v1 user1 solved list
+     * @param v2 user2 solved list
+     */
     @Override
     public void next_window(ArrayList v1,ArrayList v2) 
     {

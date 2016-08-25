@@ -8,18 +8,48 @@ package acm.progress.tracker.user_id;
 import java.util.*;
 
 /**
- *
+ *  its collect data from online judge
  * @author RONIN-47
  */
 public class CollectingDatafromServer extends Thread
 {
-    public int judge = 0 , is_valid = 0 ;
+    public int judge = 0 ,
+
+    /**
+     * is_valid is for checking validity
+     * us means user1 user name 
+     * cp means user2 user name 
+     */
+            
+    is_valid = 0 ;
     String us , cp ;
+
+    /**
+     *  
+     */
     public ArrayList v1 = new ArrayList() ;
+
+    /**
+     *
+     */
     public ArrayList v2 = new ArrayList() ;
+
+    /**
+     *
+     */
     public ArrayList v3 = new ArrayList() ;
+
+    /**
+     *
+     */
     public ArrayList v4 = new ArrayList();
 
+    /**
+     *
+     * @param judge judge id 
+     * @param us user1 user name
+     * @param cp user2 user name
+     */
     public CollectingDatafromServer(int judge,String us,String cp) 
     {
         this.judge = judge ;
