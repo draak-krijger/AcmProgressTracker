@@ -13,18 +13,34 @@ package display;
 import java.util.* ;
 import java.lang.* ;
 
+/**
+ * it finds differences between first and second user
+ * @author RONIN-47
+ */
 public class Calculation 
 {
     ArrayList user1 = new ArrayList();
     ArrayList user2 = new ArrayList();
+
+    /**
+     *  difference will keep in this list 
+     */
     public ArrayList difference_with_second = new ArrayList();
 
+    /**
+     *
+     * @param user1 solved list of user1
+     * @param user2 solved list of user2
+     */
     public Calculation(ArrayList user1,ArrayList user2) 
     {
         this.user1 = user1 ;
         this.user2 = user2 ;
     }
     
+    /**
+     *  create difference 
+     */
     public void make_difference()
     {
         Collections.sort(user1);

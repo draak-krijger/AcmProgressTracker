@@ -42,7 +42,7 @@ import javafx.util.Callback;
  * This class is first class where our application start.
  * It extends Application class 
  */
-public class AcmProgressTracker extends Application {
+public class ACMProgressComparer extends Application {
     
     Stage window ;
     private TableView<Table_Row>table = new TableView<Table_Row>() ;
@@ -59,7 +59,7 @@ public class AcmProgressTracker extends Application {
     public void start(Stage primaryStage) {
         th = new work();
         window = primaryStage ;
-        window.setTitle("Acm Progress Tracker");
+        window.setTitle("ACM Progress Comparer");
         window.setMinWidth(1080);
         window.setMinHeight(500);
         Image ico = new Image("images/acm.png");
